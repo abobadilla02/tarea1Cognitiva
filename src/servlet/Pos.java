@@ -143,10 +143,6 @@ public class Pos extends HttpServlet {
 			JSONObject a = (JSONObject) parser
 					.parse(new FileReader("/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/json/archivo.json"));
 
-			// arreglo repetidas
-			ArrayList<String> analizadas = new ArrayList<String>();
-			boolean estaRepetida = false;
-
 			// arreglo de palabras del documento
 			JSONArray palabras = (JSONArray) a.get("palabras");
 
@@ -155,224 +151,32 @@ public class Pos extends HttpServlet {
 
 					String respuesta = "";
 
-					String tagAnterior = null;
-					String tagSiguiente = null;
-
 					for (int i = 0; i < palabras.size(); i++) {
-						JSONObject palabraTemp1 = (JSONObject) palabras.get(i);
-						JSONObject palabraTemp1Anterior = null;
 
-						if (i > 0) {
-							palabraTemp1Anterior = (JSONObject) palabras.get(i - 1);
-						}
+						JSONObject palabra1 = (JSONObject) palabras.get(i);
 
-						for (int m = 0; m < analizadas.size(); m++) {
-							String contenido = (String) palabraTemp1.get("palabra");
-							String categoriaContenido = (String) palabraTemp1.get("categoria");
+						String categoria = (String) palabra1.get("categoria");
+						for (int j = 0; j < array.length; j++) {
 
-							// Si la palabra es un 's
-							/*if (contenido.equals("'s")) {
-								if ((contenido + "-" + categoriaContenido + "-" + palabraTemp1Anterior.get("palabra"))
-										.equals(analizadas.get(m))) {
-									estaRepetida = true;
-									break;
-								} else {
-									estaRepetida = false;
+							if (categoria.equals(array[j])) {
+								// se agrega la repetida al array
+								String palabra = (String) palabra1.get("palabra");
 
-								}
-							} else { */
-								if ((contenido + "-" + categoriaContenido).equals(analizadas.get(m))) {
-									estaRepetida = true;
-									break;
-								} else {
-									estaRepetida = false;
+								respuesta += palabra + "_" + categorias[k] + "*";
 
-								}
-							//}
-
-						}
-
-						if (estaRepetida == false) {
-							JSONObject palabra1 = (JSONObject) palabras.get(i);
-
-							JSONObject palabraAnterior = null;
-							JSONObject palabraSiguiente = null;
-							// palabra anterior (aplicable al caso del 's)
-
-							if (i > 0) {
-								palabraAnterior = (JSONObject) palabras.get(i - 1);
-
-								String[] arrayTemp = { "NN", "NNS", "NNP", "NNPS" };
-								String[] arrayTemp2 = { "PRP", "PRP$", "WP", "WP$" };
-
-								for (int l = 0; l < 4; l++) {
-
-									if (palabraAnterior.get("categoria").equals(arrayTemp[l])) {
-										tagAnterior = "noun";
-										break;
-									} else {
-										if (palabraAnterior.get("categoria").equals(arrayTemp2[l])) {
-											tagAnterior = "pronoun";
-											break;
-										} else {
-											tagAnterior = "";
-										}
-									}
-								}
-
+								break;
 							}
-
-							if (palabras.size() > 2) {
-								if (i < palabras.size() - 2) {
-
-									palabraSiguiente = (JSONObject) palabras.get(i + 1);
-
-									String[] arrayTemp2 = { "PRP", "PRP$", "WP", "WP$" };
-									for (int l = 0; l < arrayTemp2.length; l++) {
-										if (palabraSiguiente.get("categoria").equals(arrayTemp2[l])) {
-											tagSiguiente = "pronoun";
-											break;
-										} else {
-											tagSiguiente = "";
-										}
-									}
-
-								}
-							} else {
-								if (i == 0) {
-									palabraSiguiente = (JSONObject) palabras.get(i + 1);
-
-									String[] arrayTemp2 = { "PRP", "PRP$", "WP", "WP$" };
-									for (int l = 0; l < arrayTemp2.length; l++) {
-										if (palabraSiguiente.get("categoria").equals(arrayTemp2[l])) {
-											tagSiguiente = "pronoun";
-											break;
-										} else {
-											tagSiguiente = "";
-										}
-									}
-								}
-							}
-
-							String categoria = (String) palabra1.get("categoria");
-
-							for (int j = 0; j < array.length; j++) {
-
-								if (categoria.equals(array[j])) {
-									// se agrega la repetida al array
-									String palabra = (String) palabra1.get("palabra");
-									// analizadas.add(palabra+"-"+palabra1.get("categoria"));
-
-									// Aqui podria hacer algo
-									// si lleva 's->'s_categoria_palabra
-
-									if (palabra.charAt(0) == '\'') {
-
-										respuesta += palabra + "_" + categorias[k] + "_"
-												+ palabraAnterior.get("palabra") + "_" + tagAnterior + ",";
-										analizadas.add(palabra + "-" + palabra1.get("categoria") + "-"
-												+ palabraAnterior.get("palabra"));
-									} else {
-										analizadas.add(palabra + "-" + palabra1.get("categoria"));
-										if (palabraSiguiente != null) {
-											respuesta += palabra + "_" + categorias[k] + "_"
-													+ palabraSiguiente.get("palabra") + "_" + tagSiguiente + ",";
-										} else {
-											// ultima palabra
-											respuesta += palabra + "_" + categorias[k] + "_" + "" + "_" + "" + ",";
-
-										}
-
-									}
-									break;
-								}
-							}
-
 						}
 
 					}
 
-					if (respuesta.length() > 0) {
-						respuesta = respuesta.substring(0, respuesta.length() - 1);
-					} else {
-						respuesta = "";
-					}
-
-					System.out.println(respuesta);
+					//System.out.println(respuesta);
 
 					response.setContentType("text/plain");
 					response.setCharacterEncoding("UTF-8");
 					response.getWriter().write(respuesta);
 				}
 			}
-
-			/*
-			 * //SI LO QUE SE DESEA MARCAR EN EL TEXTO SON LOS ADJETIVOS
-			 * if(tag.equals("adjectives")){ String respuesta=""; for(int
-			 * i=0;i<palabras.size();i++){
-			 * 
-			 * JSONObject palabra1=(JSONObject) palabras.get(i); String
-			 * categoria=(String) palabra1.get("categoria");
-			 * 
-			 * for(int j=0;j<arrayAdj.length;j++){
-			 * if(categoria.equals(arrayAdj[j])){ String palabra=(String)
-			 * palabra1.get("palabra"); respuesta+=palabra+"_adjective,"; break;
-			 * } } }
-			 * 
-			 * respuesta=respuesta.substring(0, respuesta.length()-1);
-			 * 
-			 * response.setContentType("text/plain");
-			 * response.setCharacterEncoding("UTF-8");
-			 * response.getWriter().write(respuesta); } //SI LO QUE SE DESEA
-			 * MARCAR EN EL TEXTO SON LOS VERBOS if(tag.equals("verbs")){ String
-			 * respuesta=""; for(int i=0;i<palabras.size();i++){
-			 * 
-			 * JSONObject palabra1=(JSONObject) palabras.get(i); String
-			 * categoria=(String) palabra1.get("categoria");
-			 * 
-			 * for(int j=0;j<arrayVerb.length;j++){
-			 * if(categoria.equals(arrayVerb[j])){ String palabra=(String)
-			 * palabra1.get("palabra"); respuesta+=palabra+"_verb,"; break; } }
-			 * }
-			 * 
-			 * respuesta=respuesta.substring(0, respuesta.length()-1);
-			 * 
-			 * response.setContentType("text/plain");
-			 * response.setCharacterEncoding("UTF-8");
-			 * response.getWriter().write(respuesta); } //SI LO QUE SE DESEA
-			 * MARCAR EN EL TEXTO SON LOS ADVERBIOS if(tag.equals("adverbs")){
-			 * String respuesta=""; for(int i=0;i<palabras.size();i++){
-			 * 
-			 * JSONObject palabra1=(JSONObject) palabras.get(i); String
-			 * categoria=(String) palabra1.get("categoria");
-			 * 
-			 * for(int j=0;j<arrayAdverb.length;j++){
-			 * if(categoria.equals(arrayAdverb[j])){ String palabra=(String)
-			 * palabra1.get("palabra"); respuesta+=palabra+"_adverb,"; break; }
-			 * } }
-			 * 
-			 * respuesta=respuesta.substring(0, respuesta.length()-1);
-			 * 
-			 * response.setContentType("text/plain");
-			 * response.setCharacterEncoding("UTF-8");
-			 * response.getWriter().write(respuesta); } //SI LO QUE DESEA MARCAR
-			 * EN EL TEXTO SON LOS PRONOMBRES if(tag.equals("pronouns")){ String
-			 * respuesta=""; for(int i=0;i<palabras.size();i++){
-			 * 
-			 * JSONObject palabra1=(JSONObject) palabras.get(i); String
-			 * categoria=(String) palabra1.get("categoria");
-			 * 
-			 * for(int j=0;j<arrayPronoun.length;j++){
-			 * if(categoria.equals(arrayPronoun[j])){ String palabra=(String)
-			 * palabra1.get("palabra"); respuesta+=palabra+"_pronoun,"; break; }
-			 * } }
-			 * 
-			 * respuesta=respuesta.substring(0, respuesta.length()-1);
-			 * 
-			 * response.setContentType("text/plain");
-			 * response.setCharacterEncoding("UTF-8");
-			 * response.getWriter().write(respuesta); }
-			 */
 
 		} catch (ParseException e) {
 

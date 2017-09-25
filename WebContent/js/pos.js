@@ -30,12 +30,12 @@ $(document).ready(function(){
 
 				}else{
 
-					var arrayPalabras=respuesta.split(",");
+					var arrayPalabras=respuesta.split("*");
 
 					//si hay span de la clase, lo elimino, si no, lo pongo
-
+					
 					if($("."+arrayPalabras[0].split("_")[1]+"").length){
-
+						
 						$("."+arrayPalabras[0].split("_")[1]+"").contents().unwrap();
 						/*
 						for(var i=0;i<arrayPalabras.length;i++){
@@ -47,16 +47,23 @@ $(document).ready(function(){
 						*/
 					}else{
 							
-							for(var i=0;i<arrayPalabras.length;i++){
+							for(var i=0;i<arrayPalabras.length - 1;i++){
 
 								$("#textoDocumento").html(function(index,html){
 
 									//con esta expresión regular solo se tomarán las palabras completas, y no secciones de otras
-									var changing_value = arrayPalabras[i].split("_")[0];
-									var tag_value=arrayPalabras[i].split("_")[1];
+									//var changing_value = arrayPalabras[i].split("_")[0];
+									/*var tag_value=arrayPalabras[i].split("_")[1];
 									var re;
-									var esQuote=false;
+									var esQuote=false; */
+					
+									var changing_value = arrayPalabras[i].split("_")[0];
+									re = new RegExp("\\b" + changing_value + "\\b","g");
 									
+									//console.log(re);
+									//console.log("<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
+									return html.replace(re,
+											"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
 									//ya que POS categoriza las palabras anteriores al 's, y a este ultimo como dos distintas
 
 									/*if(arrayPalabras[i].split("_")[2]=="'s"){
@@ -75,6 +82,7 @@ $(document).ready(function(){
 										//"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
 
 									}else{ */
+									/*
 										if(arrayPalabras[i].split("_")[2].charAt(0)=='\''){
 											re = new RegExp("\\b" + changing_value,"g");
 											
@@ -146,7 +154,7 @@ $(document).ready(function(){
 											return html.replace(re,
 											"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
 										}
-									}
+									} */
 
 									
 
