@@ -1,0 +1,195 @@
+body{
+	background-color: #F2F2F2;
+}
+
+.contenedor-upload{
+	display: flex;
+  	justify-content: center;
+
+}
+
+
+.documento{
+	border: 1px solid #A9F5A9;
+	background-color: #FFF;
+	width: 100%;
+	height: 300px;
+	overflow-y: auto;
+  
+}
+
+.contenedor-keywords{
+	margin-top: 10px;
+	
+}
+
+#keywords{
+	border: 1px solid #A9F5A9;
+	background-color: #FFF;
+	width: 100%;
+	height: 50px;
+	overflow-y: auto;
+	
+}
+
+#img-loading{
+	width:30px;
+	height:30px;
+}
+
+.contenedor-pos{
+	border: 1px solid #A9F5A9;
+	width: 100%;
+	height: 300px;
+	margin-bottom: 35px;
+	display: none;
+}
+
+.contenedor-ner{
+	border: 1px solid #A9F5A9;
+	width: 100%;
+	height: 300px;
+	display: none;
+
+
+}
+
+/*CLASES PARA TAGS*/
+
+.noun, #noun {
+	background-color: green;
+	color:white;
+}
+
+.adjective, #adjective {
+	background-color: red;
+	color:white;
+}
+
+.verb, #verb {
+	background-color: grey;
+	color:white;
+}
+
+.adverb, #adverb {
+	background-color: orange;
+	color:white;
+}
+
+.pronoun, #pronoun {
+	background-color: blue;
+	color:white;
+}
+
+.conjunction, #conjunction {
+	background-color: yellow;
+}
+
+.cardinalnum, #cardinalnum {
+	background-color: black;
+	color:white;
+}
+
+.determiner, #determiner {
+	background-color: #00ff80;
+	color:white;
+}
+
+.preposition, #preposition {
+	background-color: #f90680;
+	color:white;
+}
+
+.to, #to{
+	background-color: #ac5353;
+	color:white;
+}
+
+.foreignword, #foreignword{
+	background-color: #c44dff;
+	color:white;
+}
+
+.possessive, #possessive{
+	background-color: #ff704d;
+	color:white;
+}
+
+.existential, #existential{
+	background-color: #669999;
+	color:white;
+}
+
+
+.listItem, #listItem{
+	background-color: #cccc00;
+	color:white;
+}
+
+.modalTag, #modalTag{
+	background-color: #b30059;
+	color:white;
+}
+
+.predeterminer, #predeterminer{
+	background-color: #ff80aa;
+	color:white;
+}
+
+.particle, #particle{
+	background-color:#1f1f7a;
+	color:white;
+}
+
+.symbol, #symbol{
+	background-color: #663366;
+	color:white;
+}
+
+.interjection, #interjection{
+	background-color: #660000;
+	color:white;
+}
+/*FIN CLASES PARA TAGS*/
+
+/*CLASES PARA ENTIDADES*/
+
+.location, #location{
+	text-decoration: underline;
+	text-decoration-color: red;
+
+}
+
+
+.person, #person{
+	text-decoration: underline;
+	text-decoration-color: black;
+
+}
+
+/*FIN CLASES PARA ENTIDADES*/
+
+
+.display-checkbox{
+	display: inline-block;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

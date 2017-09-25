@@ -22,7 +22,11 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/darkaliensky/Escritorio/Trabajos/UFRO/8° Semestre (2017)/Computación Cognitivas/stanford-ner-2017-06-09/stanford-ner.jar"/>
-	<classpathentry kind="lib" path="/home/darkaliensky/Escritorio/Trabajos/UFRO/8° Semestre (2017)/Computación Cognitivas/stanford-postagger-2017-06-09/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/taggers"/>
+	<classpathentry kind="lib" path="/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/stanford-ner.jar"/>
+	<classpathentry kind="lib" path="/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/taggers/stanford-ner.jar"/>
+	<classpathentry kind="lib" path="/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/taggers/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/org.json.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
