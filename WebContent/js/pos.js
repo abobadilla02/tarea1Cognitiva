@@ -59,7 +59,7 @@ $(document).ready(function(){
 									
 									//ya que POS categoriza las palabras anteriores al 's, y a este ultimo como dos distintas
 
-									if(arrayPalabras[i].split("_")[2]=="'s"){
+									/*if(arrayPalabras[i].split("_")[2]=="'s"){
 										//se considera la palabra anterior al 's como una distinta
 										re = new RegExp("\\b" + changing_value,"g");
 										if(tag_value=="pronoun"){
@@ -68,13 +68,13 @@ $(document).ready(function(){
 											if(tag_value=="noun"){
 												nounPintada=true;
 											}
-										}
+										} 
 
 										
 										//return html.replace(re,
 										//"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
 
-									}else{
+									}else{ */
 										if(arrayPalabras[i].split("_")[2].charAt(0)=='\''){
 											re = new RegExp("\\b" + changing_value,"g");
 											
@@ -87,7 +87,7 @@ $(document).ready(function(){
 											}
 
 										}
-									}
+									//}
 								
 									//re = new RegExp("\\b" + changing_value + "\\b","g");
 									if(arrayPalabras[i].split("_")[0].charAt(0)=='\''){

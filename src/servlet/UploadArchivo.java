@@ -76,7 +76,8 @@ public class UploadArchivo extends HttpServlet {
 		String serializedClassifier = "/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/classifiers/english.all.3class.distsim.crf.ser.gz";
 		AbstractSequenceClassifier<CoreLabel> classifier;
 		List<Triple<String, Integer, Integer>> listaEntidades;
-		String fileContents = IOUtils.slurpFile("/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/json/archivo.txt");
+		String fileContents = IOUtils
+				.slurpFile("/home/darkaliensky/Escritorio/apache-tomcat-7.0.81/lib/json/archivo.txt");
 
 		try {
 			classifier = CRFClassifier.getClassifier(serializedClassifier);
@@ -88,7 +89,7 @@ public class UploadArchivo extends HttpServlet {
 				System.out.println(item.first() + ": " + fileContents.substring(item.second(), item.third()));
 				System.out.println(fileContents.substring(item.second(), item.third()) + "_" + item.first());
 			}
-			
+
 		} catch (ClassCastException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,8 +113,8 @@ public class UploadArchivo extends HttpServlet {
 		String cadena = "";
 		for (List<HasWord> sentence : documentPreprocessor) {
 			List<TaggedWord> tSentence = tagger.tagSentence(sentence);
-			//pw.println(SentenceUtils.listToString(tSentence, false));
-			cadena = cadena + SentenceUtils.listToString(tSentence, false);
+			pw.println(SentenceUtils.listToString(tSentence, false) + " ");
+			cadena = cadena + SentenceUtils.listToString(tSentence, false) + " ";
 		}
 
 		pw.close();
@@ -123,32 +124,35 @@ public class UploadArchivo extends HttpServlet {
 
 		for (int i = 0; i < dividida.length; i++) {
 			String[] separada = dividida[i].split("/+");
-			
+			System.out.println(separada[0] + " - " + separada[1]);
 			if (separada[0].equals(",") || separada[1].equals(",") || separada[0].equals(".") || separada[1].equals(".")
-					|| separada[0].equals(":") || separada[1].equals(":") || separada[0].equals(";") || separada[1].equals(";") ||
-					separada[0].equals("'") || separada[1].equals("'") || separada[0].equals("``") || separada[1].equals("``") 
-					|| separada[0].equals("''") || separada[1].equals("''") || separada[0].equals("-RRB-") || separada[1].equals("-RRB-")
-					|| separada[0].equals("-LSB-") || separada[1].equals("-LSB-") || separada[0].equals("-LRB-") || separada[1].equals("-LRB-")
-					|| separada[0].equals("-RSB-") || separada[1].equals("-RSB-") || separada[0].equals("--") || separada[1].equals("--")
-					|| separada[0].equals("-LRB-") || separada[1].equals("-LRB-") || separada[0].equals("-") || separada[1].equals("-")
-					|| separada[0].equals(";") || separada[1].equals(";") || separada[0].equals("/") || separada[1].equals("/")
-					|| separada[0].equals("`") || separada[1].equals("`") || separada[0].equals("§") || separada[1].equals("§")
+					|| separada[0].equals(":") || separada[1].equals(":") || separada[0].equals(";")
+					|| separada[1].equals(";") || separada[0].equals("'") || separada[1].equals("'")
+					|| separada[0].equals("``") || separada[1].equals("``") || separada[0].equals("''")
+					|| separada[1].equals("''") || separada[0].equals("-RRB-") || separada[1].equals("-RRB-")
+					|| separada[0].equals("-LSB-") || separada[1].equals("-LSB-") || separada[0].equals("-LRB-")
+					|| separada[1].equals("-LRB-") || separada[0].equals("-RSB-") || separada[1].equals("-RSB-")
+					|| separada[0].equals("--") || separada[1].equals("--") || separada[0].equals("-LRB-")
+					|| separada[1].equals("-LRB-") || separada[0].equals("-") || separada[1].equals("-")
+					|| separada[0].equals(";") || separada[1].equals(";") || separada[0].equals("/")
+					|| separada[1].equals("/") || separada[0].equals("`") || separada[1].equals("`")
 					
-					) {
-				System.out.println("saltado");
+
+			) {
+				//System.out.println("saltado");
 			} else {
 				taggs.add(separada[0]);
 				taggs.add(separada[1]);
-			} 
+				
+			}
 			/*
-			if (!separada[0].matches("[a-zA-Z]+") || !separada[1].matches("[a-zA-Z]+")) {
-				System.out.println("saltado");
-			} else {
-				taggs.add(separada[0]);
-				taggs.add(separada[1]);
-			} */
-			
-			//System.out.println(taggs.get(i));
+			 * if (!separada[0].matches("[a-zA-Z]+") ||
+			 * !separada[1].matches("[a-zA-Z]+")) {
+			 * System.out.println("saltado"); } else { taggs.add(separada[0]);
+			 * taggs.add(separada[1]); }
+			 */
+
+			// System.out.println(taggs.get(i));
 		}
 
 		String respuesta = "{\"palabras\" : [";
@@ -157,10 +161,10 @@ public class UploadArchivo extends HttpServlet {
 			String entidad = "";
 			int cont = 0;
 			String palabra = taggs.get(i);
-			String categoria = taggs.get(i+1);
-			
-			//System.out.println(palabra + " : " + categoria);
-			
+			String categoria = taggs.get(i + 1);
+
+			// System.out.println(palabra + " : " + categoria);
+
 			for (int k = 0; k < taggs.size(); k++) {
 				// no habrá diferencia entre palabras con letras mayúsculas y
 				// minúsculas

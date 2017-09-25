@@ -25,6 +25,9 @@ $(document).ready(function(){
   	  		  data: {
   	  			  texto: contenido
   	  		  },
+	  	  	  beforeSend: function() {	
+	  			  $("#keywords").html('<img id="img-loading" class="center-block" src="imagenes/loading.gif">');
+	  	  	  },
   	  		  success: function(respuesta){
   				
   				var temp;
